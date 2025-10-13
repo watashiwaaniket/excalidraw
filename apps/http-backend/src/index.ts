@@ -1,9 +1,39 @@
 import express, { json } from "express";
+import jwt from "jsonwebtoken";
+import { JWT_SECRET } from "@repo/backend-common/config";
+import { authMiddleware } from "./middlewares/auth";
+import { CreateUserSchema } from "@repo/common/types";
+
 const app = express();
 
-app.get("/", (req, res) => {
+app.post("/signup", (req, res) => {
+    const data = CreateUserSchema.safeParse(req.body);
+    if(!data.success){
+        return res.json({
+            message : "Incorrect inputs"
+        })
+    }
+
     res.json({
-        "message" : "Goober nigger"
+        userId : "123"
+    })
+
+})
+
+app.post("/signin", (req, res) => {
+    const userId = 1;
+    const token = jwt.sign({
+        userId
+    }, JWT_SECRET);
+
+    res.json({
+        token
+    })
+})
+
+app.post("/room", authMiddleware, (req, res) => {
+    res.json({
+        roomId : 123
     })
 })
 
