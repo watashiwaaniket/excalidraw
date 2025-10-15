@@ -8,7 +8,9 @@ import * as bcrypt from "bcrypt";
 
 const app = express();
 
-app.post("/signup", (req, res) => {
+app.use(json());
+
+app.post("/signup", async (req, res) => {
     const data = CreateUserSchema.safeParse(req.body);
     if(!data.success){
         return res.json({
@@ -22,19 +24,25 @@ app.post("/signup", (req, res) => {
     const name = data.data.name;
     const photo = data.data.photo;
 
-    prismaClient.user.create({
-        data : {
-            email,
-            password : hashedPassword,
-            name,
-            photo
-        }
-    })
+    try {
+        await prismaClient.user.create({
+            data : {
+                email : email,
+                password : hashedPassword,
+                name : name,
+                photo : photo
+            }
+        });
 
-    res.json({
-        message : "you have signed up successfully!"
-    })
-
+        res.json({
+            message : "you have signed up successfully!"
+        });
+    } catch (error) {
+        console.error("Database error:", error);
+        res.status(500).json({
+            message : "Internal server error"
+        });
+    }
 })
 
 app.post("/signin", (req, res) => {
