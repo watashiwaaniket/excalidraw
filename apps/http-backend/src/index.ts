@@ -84,16 +84,22 @@ app.post("/room", authMiddleware, async (req, res) => {
     //@ts-ignore
     const userId = req.userId;
 
-    await prismaClient.room.create({
-        data: {
-            slug: parsedData.data.name,
-            adminId: userId
-        }
-    })
+    try{
+        const room = await prismaClient.room.create({
+            data: {
+                slug: parsedData.data.name,
+                adminId: userId
+            }
+        })
 
-    res.json({
-        roomId : 123
-    })
+        res.json({
+            roomId : room.id
+        })
+    }catch(e){
+        res.status(411).json({
+            message: "Room already exits with this name"
+        })
+    }
 })
 
 app.listen(3001, () => {
