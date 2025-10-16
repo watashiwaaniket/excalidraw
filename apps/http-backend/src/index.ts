@@ -25,7 +25,7 @@ app.post("/signup", async (req, res) => {
     const photo = data.data.photo;
 
     try {
-        await prismaClient.user.create({
+        const user = await prismaClient.user.create({
             data : {
                 email : email,
                 password : hashedPassword,
@@ -35,17 +35,17 @@ app.post("/signup", async (req, res) => {
         });
 
         res.json({
-            message : "you have signed up successfully!"
+            userId : user.id
         });
     } catch (error) {
         console.error("Database error:", error);
         res.status(500).json({
-            message : "Internal server error"
+            message : "User with same email, already exists"
         });
     }
 })
 
-app.post("/signin", (req, res) => {
+app.post("/signin", async (req, res) => {
     const data = SignInSchema.safeParse(req.body);
     if(!data.success){
         return res.json({
@@ -53,23 +53,43 @@ app.post("/signin", (req, res) => {
         })
     }
 
-    const userId = 1;
-    const token = jwt.sign({
-        userId
-    }, JWT_SECRET);
-
-    res.json({
-        token
+    const response = await prismaClient.user.findFirst({
+        where: {
+            email: data.data.email
+        }
     })
+
+    if(response?.password && bcrypt.compareSync(data.data.password, response?.password.toString())){
+        const token = jwt.sign({
+            userId: response.id.toString()
+        }, JWT_SECRET);
+
+        res.status(200).json({
+            token
+        })
+    } else{
+        res.status(403).json({
+            message: "Not Authorized"
+        })
+    }
 })
 
-app.post("/room", authMiddleware, (req, res) => {
-    const data = CreateRoomSchema.safeParse(req.body);
-    if(!data.success){
+app.post("/room", authMiddleware, async (req, res) => {
+    const parsedData = CreateRoomSchema.safeParse(req.body);
+    if(!parsedData.success){
         return res.json({
             message : "Incorrect inputs"
         })
     }
+    //@ts-ignore
+    const userId = req.userId;
+
+    await prismaClient.room.create({
+        data: {
+            slug: parsedData.data.name,
+            adminId: userId
+        }
+    })
 
     res.json({
         roomId : 123
