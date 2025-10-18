@@ -16,17 +16,22 @@ interface User {
 const users: User[] = [];
 
 function checkUser(token: string) : string | null {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    try{
+        const decoded = jwt.verify(token, JWT_SECRET);
 
-    if (typeof decoded == "string"){
+        if (typeof decoded == "string"){
+            return null;
+        }
+
+        if(!decoded || !(decoded as JwtPayload).userId){
+            return null;
+        }
+        
+        return decoded.userId;
+    } catch(e){
         return null;
     }
-
-    if(!decoded || !(decoded as JwtPayload).userId){
-        return null;
-    }
-    
-    return decoded.userId;
+    return null;
 }
 
 wss.on('connection', function connection(ws, request){
@@ -75,6 +80,30 @@ wss.on('connection', function connection(ws, request){
                 return;
             }
             user.rooms = user?.rooms.filter(x => x === parsedData.room);
+        }
+
+        if (parsedData.type == "chat"){
+            const roomId = parsedData.roomId;
+            const message = parsedData.message;
+
+            //use Queues for storing onto the db [better approach]
+            await prismaClient.chat.create({
+                data: {
+                    roomId,
+                    message,
+                    userId
+                }
+            })
+
+            users.forEach(user => {
+                if (user.rooms.includes(roomId)){
+                    user.ws.send(JSON.stringify({
+                        type: "chat",
+                        message: message,
+                        roomId
+                    }))
+                }
+            })
         }
     })
 })
