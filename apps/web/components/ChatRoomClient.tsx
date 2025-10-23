@@ -31,7 +31,7 @@ export default function ChatRoomClient({
     }, [socket, loading, id])
 
     return <div>
-        {messages.map(m => <div>{m.message}</div>)}
+        {chats.map(m => <div>{m.message}</div>)}
         <input 
             type="text"
             value={currentMessage}
