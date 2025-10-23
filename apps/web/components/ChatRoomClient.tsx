@@ -28,6 +28,9 @@ export default function ChatRoomClient({
                 }
             }
         }
+        // return () => {
+        //     socket?.close()
+        // }
     }, [socket, loading, id])
 
     return <div>
