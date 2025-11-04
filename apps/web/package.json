@@ -11,7 +11,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@repo/ui": "workspace:*",
+    "@paper-design/shaders-react": "^0.0.61",
     "@tailwindcss/postcss": "^4.1.16",
     "axios": "^1.12.2",
     "next": "^15.5.0",

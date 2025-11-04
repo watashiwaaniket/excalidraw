@@ -5,8 +5,7 @@ interface InputProps{
 
 export default function Input({label, onChange} : InputProps) {
     return <input
-        type="text" 
-        className="border p-1.5 rounded-xl"
+        className="border p-1.5 rounded-xl w-80 border-neutral-300"
         placeholder={label}
         onChange={onChange}
         type="password"

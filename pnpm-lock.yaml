@@ -54,9 +54,9 @@ importers:
 
   apps/web:
     dependencies:
-      '@repo/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
+      '@paper-design/shaders-react':
+        specifier: ^0.0.61
+        version: 0.0.61(@types/react@19.1.0)(react@19.1.0)
       '@tailwindcss/postcss':
         specifier: ^4.1.16
         version: 4.1.16
@@ -196,46 +196,6 @@ importers:
         version: 8.40.0(eslint@9.34.0(jiti@2.6.1))(typescript@5.9.2)
 
   packages/typescript-config: {}
-
-  packages/ui:
-    dependencies:
-      '@tailwindcss/postcss':
-        specifier: ^4.1.16
-        version: 4.1.16
-      postcss:
-        specifier: ^8.5.6
-        version: 8.5.6
-      react:
-        specifier: ^19.1.0
-        version: 19.1.0
-      react-dom:
-        specifier: ^19.1.0
-        version: 19.1.0(react@19.1.0)
-      tailwindcss:
-        specifier: ^4.1.16
-        version: 4.1.16
-    devDependencies:
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@types/node':
-        specifier: ^22.15.3
-        version: 22.15.3
-      '@types/react':
-        specifier: 19.1.0
-        version: 19.1.0
-      '@types/react-dom':
-        specifier: 19.1.1
-        version: 19.1.1(@types/react@19.1.0)
-      eslint:
-        specifier: ^9.34.0
-        version: 9.34.0(jiti@2.6.1)
-      typescript:
-        specifier: 5.9.2
-        version: 5.9.2
 
 packages:
 
@@ -507,6 +467,18 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@paper-design/shaders-react@0.0.61':
+    resolution: {integrity: sha512-VrV/PbOX6R81cV4/Ynlxh/DvstZhDMVFplXI8Iupb9EioXJQJDAg/CSmacj7ktKYOnsnFxeuWFnwEggJlAhS4A==}
+    peerDependencies:
+      '@types/react': ^18 || ^19
+      react: ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  '@paper-design/shaders@0.0.61':
+    resolution: {integrity: sha512-1TLuNRwTfWTYT9pIEnKC9D0sJfMrdHklMH4coj1zzlv0wabSFdAQzFi1Uu1724/LEp25VbN5EcF7nRYa6Xg6VQ==}
 
   '@prisma/client@6.17.1':
     resolution: {integrity: sha512-zL58jbLzYamjnNnmNA51IOZdbk5ci03KviXCuB0Tydc9btH2kDWsi1pQm2VecviRTM7jGia0OPPkgpGnT3nKvw==}
@@ -2410,6 +2382,15 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
+
+  '@paper-design/shaders-react@0.0.61(@types/react@19.1.0)(react@19.1.0)':
+    dependencies:
+      '@paper-design/shaders': 0.0.61
+      react: 19.1.0
+    optionalDependencies:
+      '@types/react': 19.1.0
+
+  '@paper-design/shaders@0.0.61': {}
 
   '@prisma/client@6.17.1(prisma@6.17.1(typescript@5.9.2))(typescript@5.9.2)':
     optionalDependencies:
