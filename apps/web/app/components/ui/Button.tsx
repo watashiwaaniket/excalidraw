@@ -1,12 +1,23 @@
+import { motion } from "motion/react";
+
 interface ButtonProps{
     isSignin : boolean;
-    onClick : () => void;
+    onClick ?: () => void;
 }
 
 export default function Button({isSignin, onClick} : ButtonProps) {
-    return <button onClick={onClick} className="bg-[#FF0080] text-white p-2 rounded-xl w-80 cursor-pointer hover:bg-[#FF0080]/80 transition-all duration-300">
+    return <motion.button 
+        onClick={onClick} 
+        className="bg-[#FF0080] text-white p-2 rounded-xl w-80 cursor-pointer hover:bg-[#FF0080]/80 transition-all duration-300"
+        whileTap={{scale: 0.95}}
+        animate={{
+            transition: {
+                duration: 1
+            }
+        }}
+    >
         <span className="text-white">
             {isSignin ? 'Sign in' : 'Sign up'}
         </span>
-    </button>
+    </motion.button>
 };

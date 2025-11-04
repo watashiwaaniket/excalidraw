@@ -5,10 +5,10 @@ export default function page() {
     return(
         <div className="w-screen h-screen flex">
             <div className="w-screen sm:w-[50vw] h-screen flex items-center justify-between flex-col p-3">
-                <div className="text-2xl font-bold w-full text-left text-neutral-900">Excalidraw</div>
+                <div className="text-2xl font-bold w-full text-left text-neutral-900">Wiredraw</div>
                 <AuthPage isSignin={true}/>
                 <p className="text-sm text-gray-500 w-full text-left">
-                    &copy; 2025 Excalidraw
+                    &copy; 2025 Wiredraw
                 </p>
             </div>
             <div className="hidden sm:flex sm:w-[50vw] p-3">
