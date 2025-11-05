@@ -13,6 +13,12 @@ export default function page() {
             </div>
             <div className="hidden sm:flex sm:w-[50vw] p-3">
                 <div className="w-full rounded-xl overflow-clip relative">
+                    <div className="absolute flex items-center justify-center w-full h-full text-2xl z-10 text-white/40">
+                        <p className="flex flex-col w-[400px] gap-1">
+                            Life is like riding a bicycle. To keep your balance, you must keep moving.
+                            <span className="text-right">- Albert Einstein</span>
+                        </p>
+                    </div>
                     <GrainGradient
                         style={{height: "100%", width: "100%", position: "absolute", zIndex: "0"}}
                         colorBack="hsl(0, 0%, 8%)"
@@ -21,10 +27,10 @@ export default function page() {
                         className="opacity-96"
                         intensity={0.2}
                         noise={0.3}
-                        shape="blob"
+                        shape="corners"
                         offsetX={0}
                         offsetY={0}
-                        scale={0.8}
+                        scale={0.9}
                         rotation={0}
                         speed={1}
                     />
