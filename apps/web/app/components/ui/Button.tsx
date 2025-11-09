@@ -9,15 +9,12 @@ interface ButtonProps {
 
 export default function Button({ isSignin, onClick }: ButtonProps) {
   const controls = useAnimation();
-  const [ripple, setRipple] = useState(false);
 
   const handleTap = async () => {
-    setRipple(true);
     await controls.start({
       scale: [1, 0.98, 1.02, 1],
       transition: { duration: 0.4, ease: "easeInOut" },
     });
-    setRipple(false);
     if (onClick) onClick();
   };
 
