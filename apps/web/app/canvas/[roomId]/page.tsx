@@ -24,7 +24,7 @@ export default function Canvas() {
             canvas.addEventListener("mouseup", (e) => {
                 clicked = false
                 console.log(e.clientX)
-                console.log(e.clientY)
+                console.log(e.clientY)                  
             })
 
             canvas.addEventListener("mousemove", (e) => {

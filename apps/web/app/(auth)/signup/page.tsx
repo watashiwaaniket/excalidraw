@@ -1,11 +1,12 @@
 import { GrainGradient } from "@paper-design/shaders-react";
 import AuthPage from "../../components/AuthPage";
+import Link from "next/link";
 
 export default function page() {
     return(
         <div className="w-screen h-screen flex">
             <div className="w-screen sm:w-[50vw] h-screen flex items-center justify-between flex-col p-3">
-                <div className="text-2xl font-bold w-full text-left text-neutral-900">Wiredraw</div>
+                <Link href={'/'} className="text-2xl font-bold w-full text-left text-neutral-900">Wiredraw</Link>
                 <AuthPage isSignin={false}/>
                 <p className="text-sm text-gray-500 w-full text-left">
                     &copy; 2025 Wiredraw
