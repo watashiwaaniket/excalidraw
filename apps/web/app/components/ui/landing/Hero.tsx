@@ -1,3 +1,4 @@
+"use client";
 import { GrainGradient } from "@paper-design/shaders-react";
 import Link from "next/link";
 import NavButton from "../NavButton";
