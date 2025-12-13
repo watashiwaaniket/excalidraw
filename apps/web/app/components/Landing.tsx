@@ -6,6 +6,7 @@ import { SparkleIcon } from "lucide-react";
 import { ShineButton } from "./ui/ShineButton";
 import Hero from "./ui/landing/Hero";
 import Features from "./ui/landing/Features";
+import { MusicToggleButton } from "./ui/MusicToggleButton";
 
 export default function Landing() {
     return(

@@ -2,6 +2,7 @@
 import { GrainGradient } from "@paper-design/shaders-react";
 import Link from "next/link";
 import NavButton from "../NavButton";
+import { MusicToggleButton } from "../MusicToggleButton";
 
 export default function Hero() {
     return(
@@ -26,6 +27,9 @@ export default function Hero() {
                 WIREDRAW
                 </h1>
                 <Link href={'/signin'}><NavButton label="login" /></Link>
+            </div>
+            <div className="absolute bottom-6 right-6">
+                <MusicToggleButton />
             </div>
         </div>
     )
