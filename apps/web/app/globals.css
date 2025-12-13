@@ -3,3 +3,33 @@
 body {
     background-color : #f4f3f3;
 }
+
+@keyframes accordion-down {
+    from {
+        height: 0;
+        opacity: 0;
+    }
+    to {
+        height: var(--radix-accordion-content-height);
+        opacity: 1;
+    }
+}
+
+@keyframes accordion-up {
+    from {
+        height: var(--radix-accordion-content-height);
+        opacity: 1;
+    }
+    to {
+        height: 0;
+        opacity: 0;
+    }
+}
+
+[data-state="open"][data-slot="accordion-content"] {
+    animation: accordion-down 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-state="closed"][data-slot="accordion-content"] {
+    animation: accordion-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}

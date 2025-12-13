@@ -22,6 +22,8 @@ export default function NavButton({label, onClick} : NavButtonProps) {
             className="px-6 py-1 bg-neutral-100 rounded-2xl cursor-pointer"
             onClick={handleTap}
             animate={controls}
+            whileHover={{padding: "6px 30px"}}
+            transition={{ duration: 1, bounce: 0.6, type: "spring" }}
         >
             {label}
         </motion.button>

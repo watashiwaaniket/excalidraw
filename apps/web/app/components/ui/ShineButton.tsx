@@ -7,11 +7,13 @@ export const ShineButton = ({
   containerClassName,
   label,
   Icon,
+  IconAura
 }: {
   className?: string;
   containerClassName?: string;
   label: string;
   Icon?: LucideIcon;
+  IconAura?: 'pink' | 'blue' | 'yellow' | 'red' | 'purple'
 }) => {
   return (
     <motion.div
@@ -38,7 +40,7 @@ export const ShineButton = ({
           containerClassName,
         )}
       >
-        {Icon && <Icon className="text-primary size-3" />}
+        {Icon && <Icon className={`text-primary size-3 drop-shadow-lg drop-shadow-yellow-500 animate-pulse`} />}
         <div className="text-neutral-900 text-sm font-normal whitespace-nowrap">
           {label}
         </div>

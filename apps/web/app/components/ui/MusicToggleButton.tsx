@@ -55,7 +55,7 @@ export const MusicToggleButton = () => {
         onClick={handleClick}
         key="audio"
         initial={{ padding: "14px 14px " }}
-        whileHover={{ padding: "18px 22px " }}
+        whileHover={{ padding: "16px 20px " }}
         whileTap={{ padding: "18px 22px " }}
         transition={{ duration: 1, bounce: 0.6, type: "spring" }}
         className="bg-[#f4f3f3] cursor-pointer rounded-full p-2"

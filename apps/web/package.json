@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@paper-design/shaders-react": "^0.0.61",
+    "@radix-ui/react-accordion": "^1.2.12",
+    "@radix-ui/themes": "^3.2.1",
     "@tabler/icons-react": "^3.35.0",
     "@tailwindcss/postcss": "^4.1.16",
     "axios": "^1.12.2",
