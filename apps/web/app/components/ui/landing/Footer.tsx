@@ -9,7 +9,7 @@ export default function Footer() {
                 <div>
                     <h2 className="text-xl">WIREDRAW</h2>
                     <p className="text-xs text-neutral-400">
-                        @astriknormal on twt
+                        <Link href={'https://x.com/astriknormal'} className="hover:text-neutral-50">@astriknormal</Link> on twt
                     </p>
                 </div>
                 <div className="flex flex-col text-neutral-400">

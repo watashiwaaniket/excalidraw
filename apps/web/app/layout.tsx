@@ -12,8 +12,11 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Excalidraw",
+  title: "Wiredraw",
   description: "Draw what you want, share what you want with the crew",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
