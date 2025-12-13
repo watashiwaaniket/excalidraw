@@ -4,11 +4,11 @@ import { Bento } from "./Bento";
 
 export default function Features() {
     return(
-        <section className="pt-20 flex flex-col items-center">
+        <section className="pt-20 flex flex-col items-center px-2">
             <div className="flex p-4">
                 <ShineButton label="Realtime Collaboration" Icon={SparkleIcon} IconAura="yellow"/>
             </div>
-            <h2 className="text-4xl w-100 text-center text-neutral-800">
+            <h2 className="text-3xl md:text-4xl w-100 text-center text-neutral-800 px-3">
                 What makes us Special?
             </h2>
             <Bento />

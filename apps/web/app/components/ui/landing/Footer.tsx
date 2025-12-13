@@ -5,7 +5,7 @@ const link = "hover:text-neutral-50"
 export default function Footer() {
     return(
         <section className="w-screen bg-neutral-900 text-neutral-100 flex flex-col items-center">
-            <div className="h-60 pt-12 flex justify-between w-5xl">
+            <div className="h-60 pt-12 flex justify-between w-[20rem] md:w-2xl lg:w-5xl">
                 <div>
                     <h2 className="text-xl">WIREDRAW</h2>
                     <p className="text-xs text-neutral-400">

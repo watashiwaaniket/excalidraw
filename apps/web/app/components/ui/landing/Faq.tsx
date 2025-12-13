@@ -32,10 +32,10 @@ export default function Faq() {
             <div className="flex p-4">
                 <ShineButton label="FAQ" Icon={FileQuestion} IconAura="blue"/>
             </div>
-            <h2 className="text-4xl w-full text-center text-neutral-800 mb-8">
+            <h2 className="text-3xl md:text-4xl w-full text-center text-neutral-800 mb-8 px-2">
                 You got questions? We got answers
             </h2>
-            <div className="rounded-2xl p-4 w-full max-w-6xl">
+            <div className="rounded-2xl p-4 sm:w-xl lg:w-6xl">
                 <Accordion type="single" collapsible className="w-full space-y-5">
                 {faqData.map((faq) => (
                     <AccordionItem

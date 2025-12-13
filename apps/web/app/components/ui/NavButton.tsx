@@ -1,4 +1,7 @@
+"use client";
+
 import { motion, useAnimation } from "motion/react";
+import { useMusic } from "./MusicContext";
 
 interface NavButtonProps{
     label : string;
@@ -6,7 +9,7 @@ interface NavButtonProps{
 }
 
 export default function NavButton({label, onClick} : NavButtonProps) {
-
+    const { stop, isPlaying } = useMusic();
     const controls = useAnimation();
 
     const handleTap = async () => {
@@ -14,6 +17,10 @@ export default function NavButton({label, onClick} : NavButtonProps) {
         scale: [1, 0.96, 1.02, 1],
         transition: { duration: 0.4, ease: "easeInOut" },
         });
+        // Stop music if playing
+        if (isPlaying) {
+            stop();
+        }
         if (onClick) onClick();
     };
 

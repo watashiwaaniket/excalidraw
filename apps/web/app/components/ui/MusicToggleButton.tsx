@@ -2,29 +2,18 @@
 
 import { motion } from "motion/react";
 import React, { useEffect, useState } from "react";
-import useSound from "use-sound";
+import { useMusic } from "./MusicContext";
 
 
 export const MusicToggleButton = () => {
   const bars = 5;
+  const { isPlaying, play, pause } = useMusic();
 
   const getRandomHeights = () => {
     return Array.from({ length: bars }, () => Math.random() * 0.8 + 0.2);
   };
 
   const [heights, setHeights] = useState(getRandomHeights());
-
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const [play, { pause, sound }] = useSound("/music/ethBgAudio.mp3", {
-    loop: true,
-    onplay: () => setIsPlaying(true),
-    onend: () => setIsPlaying(false),
-    onpause: () => setIsPlaying(false),
-    onstop: () => setIsPlaying(false),
-    soundEnabled: true,
-    volume: 0.5,
-  });
 
   useEffect(() => {
     if (isPlaying) {
@@ -37,16 +26,14 @@ export const MusicToggleButton = () => {
       };
     }
     setHeights(Array(bars).fill(0.1));
-  }, [isPlaying]);
+  }, [isPlaying, bars]);
 
   const handleClick = () => {
     if (isPlaying) {
       pause();
-      setIsPlaying(false);
       return;
     }
     play();
-    setIsPlaying(true);
   };
 
   return (
@@ -74,7 +61,7 @@ export const MusicToggleButton = () => {
           {heights.map((height, index) => (
             <motion.div
               key={index}
-              className="bg-neutral-800 w-[1px] rounded-full"
+              className="bg-neutral-800 w-px rounded-full"
               initial={{ height: 1 }}
               animate={{
                 height: Math.max(4, height * 14),

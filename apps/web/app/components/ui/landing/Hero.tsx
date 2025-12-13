@@ -3,10 +3,12 @@ import { GrainGradient } from "@paper-design/shaders-react";
 import Link from "next/link";
 import NavButton from "../NavButton";
 import { MusicToggleButton } from "../MusicToggleButton";
+import { MusicProvider } from "../MusicContext";
 
 export default function Hero() {
     return(
-        <div className="max-w-7xl mx-auto w-full min-h-180 rounded-4xl relative overflow-clip">
+        <MusicProvider>
+        <div className="max-w-7xl mx-auto w-[98vw] lg:w-full min-h-180 rounded-4xl relative overflow-clip">
             <GrainGradient
                 style={{height: "100%", width: "100%", position: "absolute", zIndex: "0"}}
                 colorBack="hsl(0, 0%, 8%)"
@@ -32,5 +34,6 @@ export default function Hero() {
                 <MusicToggleButton />
             </div>
         </div>
+        </MusicProvider>
     )
 };
