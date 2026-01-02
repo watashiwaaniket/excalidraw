@@ -59,10 +59,10 @@ wss.on('connection', function connection(ws, request){
 
     ws.on('message',async function message(data){
         const parsedData = JSON.parse(data as unknown as string); // {type: "join_room", roomId: 1}
-
+        const id = Number(parsedData.roomId)
         const response = await prismaClient.room.findFirst({
             where: {
-                id: parsedData.roomId
+                id
             }
         })
         if(!response?.id){
