@@ -1,25 +1,42 @@
 "use client";
-import { useEffect, useRef } from "react"
-import initDraw from "../../../draw";
-import { CircleIcon, RectangleHorizontal } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { AUTH_TOKEN, WS_URL } from "../../../config";
+import Canvas from "../../components/Canvas";
 
-export default function Canvas() {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-    const buttonStyle = "bg-white p-3 rounded-full cursor-pointer"
+export default function Page() {
+  const params = useParams<{ roomId: string }>();
+  const [socket, setSocket] = useState<WebSocket | null>(null);
 
-    useEffect(() => {
-        if(canvasRef.current){
-            initDraw(canvasRef.current);
-        }
-    }, [canvasRef]);
+  useEffect(() => {
+    const ws = new WebSocket(
+      `${WS_URL}?token=${AUTH_TOKEN}`
+    );
 
-    return(
-        <section>
-            <canvas ref={canvasRef} height={920} width={1680} className="border" />
-            <div className="absolute bottom-6 right-1/2 flex gap-2">
-                <button className={buttonStyle}><RectangleHorizontal color="black"/></button>
-                <button className={buttonStyle}><CircleIcon color="black"/></button>
-            </div>
-        </section>
-    )
-};
+    ws.onopen = () => {
+      setSocket(ws);
+      ws.send(
+        JSON.stringify({
+          type: "join_room",
+          roomId: params.roomId,
+        })
+      );
+    };
+  }, []);
+
+  if (!socket) {
+    return (
+      <section className="w-screen h-screen flex items-center justify-center">
+        <p className="text-neutral-900 animate-pulse">
+          Connecting to the server...
+        </p>
+      </section>
+    );
+  }
+
+  return (
+    <>
+      <Canvas roomId={params.roomId} socket={socket} />
+    </>
+  );
+}

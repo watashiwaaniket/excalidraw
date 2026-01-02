@@ -10,137 +10,139 @@ import cors from "cors";
 const app = express();
 
 app.use(json());
-app.use(cors())
+app.use(cors());
 
 app.post("/signup", async (req, res) => {
-    const data = CreateUserSchema.safeParse(req.body);
-    if(!data.success){
-        return res.json({
-            message : "Incorrect inputs"
-        })
-    }
+  const data = CreateUserSchema.safeParse(req.body);
+  if (!data.success) {
+    return res.json({
+      message: "Incorrect inputs",
+    });
+  }
 
-    const email = data.data.email;
-    const password = data.data.password;
-    const hashedPassword = bcrypt.hashSync(password, 5);
-    const name = data.data.name;
-    const photo = data.data.photo;
+  const email = data.data.email;
+  const password = data.data.password;
+  const hashedPassword = bcrypt.hashSync(password, 5);
+  const name = data.data.name;
+  const photo = data.data.photo;
 
-    try {
-        const user = await prismaClient.user.create({
-            data : {
-                email : email,
-                password : hashedPassword,
-                name : name,
-                photo : photo
-            }
-        });
+  try {
+    const user = await prismaClient.user.create({
+      data: {
+        email: email,
+        password: hashedPassword,
+        name: name,
+        photo: photo,
+      },
+    });
 
-        res.json({
-            userId : user.id
-        });
-    } catch (error) {
-        console.error("Database error:", error);
-        res.status(500).json({
-            message : "User with same email, already exists"
-        });
-    }
-})
+    res.json({
+      userId: user.id,
+    });
+  } catch (error) {
+    console.error("Database error:", error);
+    res.status(500).json({
+      message: "User with same email, already exists",
+    });
+  }
+});
 
 app.post("/signin", async (req, res) => {
-    const data = SignInSchema.safeParse(req.body);
-    if(!data.success){
-        return res.json({
-            message : "Incorrect inputs"
-        })
-    }
+  const data = SignInSchema.safeParse(req.body);
+  if (!data.success) {
+    return res.json({
+      message: "Incorrect inputs",
+    });
+  }
 
-    const response = await prismaClient.user.findFirst({
-        where: {
-            email: data.data.email
-        }
-    })
+  const response = await prismaClient.user.findFirst({
+    where: {
+      email: data.data.email,
+    },
+  });
 
-    if(response?.password && bcrypt.compareSync(data.data.password, response?.password.toString())){
-        const token = jwt.sign({
-            userId: response.id.toString()
-        }, JWT_SECRET);
+  if (
+    response?.password &&
+    bcrypt.compareSync(data.data.password, response?.password.toString())
+  ) {
+    const token = jwt.sign(
+      {
+        userId: response.id.toString(),
+      },
+      JWT_SECRET
+    );
 
-        res.status(200).json({
-            token
-        })
-    } else{
-        res.status(403).json({
-            message: "Not Authorized"
-        })
-    }
-})
+    res.status(200).json({
+      token,
+    });
+  } else {
+    res.status(403).json({
+      message: "Not Authorized",
+    });
+  }
+});
 
 app.post("/room", authMiddleware, async (req, res) => {
-    const parsedData = CreateRoomSchema.safeParse(req.body);
-    if(!parsedData.success){
-        return res.json({
-            message : "Incorrect inputs"
-        })
-    }
-    //@ts-ignore
-    const userId = req.userId;
+  const parsedData = CreateRoomSchema.safeParse(req.body);
+  if (!parsedData.success) {
+    return res.json({
+      message: "Incorrect inputs",
+    });
+  }
+  //@ts-ignore
+  const userId = req.userId;
 
-    try{
-        const room = await prismaClient.room.create({
-            data: {
-                slug: parsedData.data.name,
-                adminId: userId
-            }
-        })
+  try {
+    const room = await prismaClient.room.create({
+      data: {
+        slug: parsedData.data.name,
+        adminId: userId,
+      },
+    });
 
-        res.json({
-            roomId : room.id
-        })
-    }catch(e){
-        res.status(411).json({
-            message: "Room already exits with this name"
-        })
-    }
-})
+    res.json({
+      roomId: room.id,
+    });
+  } catch (e) {
+    res.status(411).json({
+      message: "Room already exits with this name",
+    });
+  }
+});
 
 app.get("/chats/:roomId", async (req, res) => {
-    try{
-        const roomId = Number(req.params.roomId);
-        const messages = await prismaClient.chat.findMany({
-            where: {
-                roomId : roomId
-            },
-            orderBy: {
-                id : "desc"
-            },
-            take : 50
-        })
+  try {
+    const roomId = Number(req.params.roomId);
+    const messages = await prismaClient.chat.findMany({
+      where: {
+        roomId: roomId,
+      },
+      orderBy: {
+        id: "desc",
+      },
+      take: 50,
+    });
 
-        res.json(
-            messages
-        )
-    }catch(e){
-        res.json({
-            message : e
-        })
-    }
-})
+    res.json(messages);
+  } catch (e) {
+    res.json({
+      message: e,
+    });
+  }
+});
 
 app.get("/room/:slug", async (req, res) => {
-    const slug = req.params.slug;
-    const room = await prismaClient.room.findFirst({
-        where: {
-            slug
-        }
-    })
+  const slug = req.params.slug;
+  const room = await prismaClient.room.findFirst({
+    where: {
+      slug,
+    },
+  });
 
-    console.log(slug, room)
-    res.json(
-        room
-    )
-})
+  console.log(slug, room);
+  res.json(room);
+});
 
 app.listen(3001, () => {
-    console.log("App listening on port 3001")
-})
+  console.log("App listening on port 3001");
+});
